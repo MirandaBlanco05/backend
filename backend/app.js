@@ -20,11 +20,15 @@ app.get("/estudiantes", async (req, res) => {
     res.status(200).json({
       status: "success",
       total: result.rowCount,
-      estudiantes: result.rows
+      estudiantes: result.rows,
     });
   } catch (error) {
     console.error("Error al obtener estudiantes:", error);
-    res.status(500).json({ status: "error", message: "Error al obtener estudiantes", details: error.message });
+    res.status(500).json({
+      status: "error",
+      message: "Error al obtener estudiantes",
+      details: error.message,
+    });
   }
 });
 
@@ -32,8 +36,12 @@ app.get("/estudiantes", async (req, res) => {
 app.post("/estudiantes", async (req, res) => {
   try {
     const { nombre, curso } = req.body;
+
     if (!nombre || !curso) {
-      return res.status(400).json({ status: "error", message: "Faltan campos obligatorios: 'nombre' y 'curso'" });
+      return res.status(400).json({
+        status: "error",
+        message: "Faltan campos obligatorios: 'nombre' y 'curso'",
+      });
     }
 
     const result = await pool.query(
@@ -44,11 +52,15 @@ app.post("/estudiantes", async (req, res) => {
     res.status(201).json({
       status: "success",
       message: "Estudiante creado correctamente",
-      estudiante: result.rows[0]
+      estudiante: result.rows[0],
     });
   } catch (error) {
     console.error("Error al crear estudiante:", error);
-    res.status(500).json({ status: "error", message: "Error al crear estudiante", details: error.message });
+    res.status(500).json({
+      status: "error",
+      message: "Error al crear estudiante",
+      details: error.message,
+    });
   }
 });
 
@@ -56,3 +68,6 @@ app.post("/estudiantes", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
 });
+
+
+export default app;

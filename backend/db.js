@@ -8,15 +8,15 @@ const { Pool } = pkg;
 let pool;
 
 if (process.env.DATABASE_URL) {
-  // Configuración para producción (Railway)
+  // 🔹 Configuración para producción (Railway u otros servicios)
   pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: {
-      rejectUnauthorized: false, // necesario para Railway
+      rejectUnauthorized: false, // necesario para conexiones seguras
     },
   });
 } else {
-  // Configuración para desarrollo local
+  // 🔹 Configuración para desarrollo local
   pool = new Pool({
     host: process.env.DB_HOST || "localhost",
     user: process.env.DB_USER || "postgres",
@@ -26,6 +26,7 @@ if (process.env.DATABASE_URL) {
   });
 }
 
+// 🔹 Probar la conexión
 pool
   .connect()
   .then(() => console.log("✅ Conexión exitosa a PostgreSQL"))
